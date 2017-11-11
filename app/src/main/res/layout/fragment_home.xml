@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/title_home"
+        layout="@layout/titlebar_home"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center">
+        <TextView
+            android:text="拍照"
+            android:textSize="20sp"
+            android:textColor="@color/color_textColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/camera_input"
+            android:background="@drawable/take_photos"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/Silver"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginTop="5dp"/>
+        <ImageView
+            android:id="@+id/pic_upload"
+            android:background="@drawable/upload_pic"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="10dp"
+            />
+        <TextView
+            android:text="上传"
+            android:textSize="20sp"
+            android:textColor="@color/color_textColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!--bar-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical"
+        android:background="@color/color_light_silver">
+        <TextView
+            android:text="人脸显示区"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/cam"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_width="190dp"
+        android:layout_height="250dp"
+        android:background="@drawable/shape_gray_square_bg"/>
+    <!--android:background="@drawable/camera_test"-->
+
+    <LinearLayout
+        android:id="@+id/register_info"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <!--bar-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical"
+            android:background="@color/color_light_silver">
+            <TextView
+                android:text="完善信息"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_info"
+            android:text="请输入用户名："
+            android:textColor="@color/color_textColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/user_info"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>
