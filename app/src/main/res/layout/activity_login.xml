@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="#F0F4F3">
 
     <LinearLayout
         android:orientation="vertical"
@@ -14,11 +14,13 @@
             android:layout_gravity="center"
             android:text="安 安"
             android:textSize="30sp"
+            android:textColor="@color/color_textColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
+            android:id="@+id/user_name"
             android:layout_width="fill_parent"
-            android:layout_height="50dip"
+            android:layout_height="55dip"
             android:background="@drawable/bg_edittext"
             android:padding="5dip"
             android:layout_marginTop="50dp"
@@ -26,24 +28,26 @@
             android:layout_marginEnd="36dp"
             android:layout_marginBottom="10dp"
             android:textColorHint="#AAAAAA"
-            android:textSize="15dip"
+            android:textSize="20dip"
             android:singleLine="true"
             android:hint="用户名..."  />
 
         <EditText
+            android:id="@+id/pass_word"
             android:layout_width="fill_parent"
-            android:layout_height="50dip"
+            android:layout_height="55dip"
             android:background="@drawable/bg_edittext"
             android:padding="5dip"
             android:layout_marginStart="36dp"
             android:layout_marginEnd="36dp"
             android:layout_marginBottom="15dp"
             android:textColorHint="#AAAAAA"
-            android:textSize="15dip"
+            android:textSize="20dip"
             android:singleLine="true"
             android:hint="密码..."  />
 
         <Button
+            android:id="@+id/login"
             android:text="登  录"
             android:textSize="20sp"
             android:textColor="@color/AntiqueWhite"
@@ -56,6 +60,7 @@
 
 
     <TextView
+        android:id="@+id/about_us"
         android:text="关于我们"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
