@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="190dp">
+        <TextView
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:text="安 安"
+            android:textSize="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:background="@drawable/bg_edittext"
+            android:padding="5dip"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="10dp"
+            android:textColorHint="#AAAAAA"
+            android:textSize="15dip"
+            android:singleLine="true"
+            android:hint="用户名..."  />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:background="@drawable/bg_edittext"
+            android:padding="5dip"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="15dp"
+            android:textColorHint="#AAAAAA"
+            android:textSize="15dip"
+            android:singleLine="true"
+            android:hint="密码..."  />
+
+        <Button
+            android:text="登  录"
+            android:textSize="20sp"
+            android:textColor="@color/AntiqueWhite"
+            android:background="@drawable/bg_button_login"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="36dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <TextView
+        android:text="关于我们"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

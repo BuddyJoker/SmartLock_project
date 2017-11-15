@@ -10,4 +10,5 @@
     <color name="color_light_silver">#F6F6F6</color>
     <color name="color_textColor">#292927</color>
     <color name="color_devColor">#4A4945</color>
+    <color name="color_background_login">#2ECFDC</color>
 </resources>
