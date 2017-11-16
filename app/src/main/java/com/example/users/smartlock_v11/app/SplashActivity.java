@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.example.users.smartlock_v11.R;
+import com.example.users.smartlock_v11.app.login.LoginActivity;
 
 import butterknife.Bind;
 
@@ -51,7 +52,7 @@ public class SplashActivity extends Activity{
             @Override
             protected void onPostExecute(Integer integer) {
                 super.onPostExecute(integer);
-                Intent intent=new Intent(SplashActivity.this,MainActivity.class);
+                Intent intent=new Intent(SplashActivity.this,LoginActivity.class);
                 startActivity(intent);
                 finish();
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
