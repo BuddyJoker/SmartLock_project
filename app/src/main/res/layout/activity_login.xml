@@ -8,7 +8,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="190dp">
+        android:paddingBottom="150dp">
         <TextView
             android:layout_marginTop="50dp"
             android:layout_gravity="center"
@@ -56,6 +56,14 @@
             android:layout_marginEnd="36dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/register_link"
+            android:text="注册账号 >"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
     </LinearLayout>
 
 

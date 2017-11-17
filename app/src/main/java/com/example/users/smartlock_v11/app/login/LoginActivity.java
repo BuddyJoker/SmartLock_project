@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.users.smartlock_v11.R;
 import com.example.users.smartlock_v11.app.MainActivity;
+import com.example.users.smartlock_v11.app.register.RegisterActivity;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -40,6 +41,8 @@ public class LoginActivity extends Activity {
     EditText pass_word;
     @Bind(R.id.login)
     Button btn_login;
+    @Bind(R.id.register_link)
+    TextView register_link;
     @Bind(R.id.about_us)
     TextView about_us;
 
@@ -93,6 +96,14 @@ public class LoginActivity extends Activity {
                     Toast.makeText(mContext,"请输入用户名和密码"+msg,Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });
+        //注册
+        register_link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(mContext, RegisterActivity.class);
+                startActivity(intent);
             }
         });
         //关于我们

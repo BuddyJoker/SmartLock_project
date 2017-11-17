@@ -29,6 +29,9 @@
         <activity android:name=".app.login.LoginActivity">
 
         </activity>
+        <activity android:name=".app.register.RegisterActivity">
+
+        </activity>
         <activity android:name=".app.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

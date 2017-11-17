@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F4F3">
+
+
+
+    <EditText
+        android:id="@+id/register_user_name"
+        android:layout_width="fill_parent"
+        android:layout_height="55dip"
+        android:background="@drawable/bg_edittext"
+        android:padding="5dip"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="10dp"
+        android:textColorHint="#AAAAAA"
+        android:textSize="20dip"
+        android:singleLine="true"
+        android:hint="用户名..."  />
+
+    <EditText
+        android:id="@+id/register_pass_word"
+        android:layout_width="fill_parent"
+        android:layout_height="55dip"
+        android:background="@drawable/bg_edittext"
+        android:padding="5dip"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="15dp"
+        android:textColorHint="#AAAAAA"
+        android:textSize="20dip"
+        android:singleLine="true"
+        android:hint="密码..."  />
+
+    <EditText
+        android:id="@+id/mail"
+        android:layout_width="fill_parent"
+        android:layout_height="55dip"
+        android:background="@drawable/bg_edittext"
+        android:padding="5dip"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="10dp"
+        android:textColorHint="#AAAAAA"
+        android:textSize="20dip"
+        android:singleLine="true"
+        android:hint="邮箱..."  />
+
+    <EditText
+        android:id="@+id/num_phone"
+        android:inputType="phone"
+        android:layout_width="fill_parent"
+        android:layout_height="55dip"
+        android:background="@drawable/bg_edittext"
+        android:padding="5dip"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="15dp"
+        android:textColorHint="#AAAAAA"
+        android:textSize="20dip"
+        android:singleLine="true"
+        android:hint="手机号..."  />
+
+    <RadioGroup
+        android:id="@+id/sex_select"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="90dp"
+            android:text="男"/>
+        <RadioButton
+            android:id="@+id/female"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="女"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/register_commit"
+        android:text="注 册"
+        android:textSize="20sp"
+        android:textColor="@color/AntiqueWhite"
+        android:background="@drawable/bg_button_login"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
