@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FlycoTabLayout_Lib/FlycoTabLayout_Lib.iml" filepath="$PROJECT_DIR$/FlycoTabLayout_Lib/FlycoTabLayout_Lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/PullToRefresh_library/PullToRefresh_library.iml" filepath="$PROJECT_DIR$/PullToRefresh_library/PullToRefresh_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SmartLock_project.iml" filepath="$PROJECT_DIR$/SmartLock_project.iml" />
       <module fileurl="file://$PROJECT_DIR$/SmartLock_v1.1.iml" filepath="$PROJECT_DIR$/SmartLock_v1.1.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/gradationscroll/gradationscroll.iml" filepath="$PROJECT_DIR$/gradationscroll/gradationscroll.iml" />

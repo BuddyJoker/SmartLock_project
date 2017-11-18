@@ -32,7 +32,7 @@ public class SplashActivity extends Activity{
         //icon.setVisibility(View.VISIBLE);
         showView.animate()
                 .alpha(1)
-                .setDuration(2500)
+                .setDuration(2000)
                 .setListener(null);
 
 
@@ -42,7 +42,7 @@ public class SplashActivity extends Activity{
             protected Integer doInBackground(Void... voids) {
 
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -55,7 +55,7 @@ public class SplashActivity extends Activity{
                 Intent intent=new Intent(SplashActivity.this,LoginActivity.class);
                 startActivity(intent);
                 finish();
-                overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                //overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
             }
         }.execute(new Void[]{});
     }

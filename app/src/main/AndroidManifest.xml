@@ -23,7 +23,11 @@
         <activity android:name=".app.MainActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".lock.Activity.ContentActivity"/>
         <activity android:name=".app.login.LoginActivity">
@@ -33,11 +37,7 @@
 
         </activity>
         <activity android:name=".app.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

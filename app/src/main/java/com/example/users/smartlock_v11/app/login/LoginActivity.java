@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -49,6 +52,9 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        Transition explode= TransitionInflater.from(this).inflateTransition(R.transition.explode);
+        getWindow().setEnterTransition(explode);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         mContext=LoginActivity.this;
@@ -57,7 +63,7 @@ public class LoginActivity extends Activity {
 
     private void sendDataToNet() {
         OkHttpUtils.postString()
-                .url("")
+                .url("url")
                 .content(processSendData(user_name.getText().toString(),pass_word.getText().toString()))
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build()
@@ -128,4 +134,6 @@ public class LoginActivity extends Activity {
         Error_code=loginBean.getError_code();
         msg=loginBean.getMsg();
     }
+
+
 }

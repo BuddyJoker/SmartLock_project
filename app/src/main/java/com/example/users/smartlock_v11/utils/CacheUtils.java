@@ -12,7 +12,7 @@ import java.io.FileOutputStream;
  */
 public class CacheUtils {
 
-    public static final String SP_NAME = "News";
+    public static final String SP_NAME = "Tokens";
     private static FileOutputStream fos;
     private static ByteArrayOutputStream baos;
     private static FileInputStream fis;

@@ -20,6 +20,11 @@ public class RegisterBean {
     private String phonenum;
     private String sex;
 
+    public RegisterBean(String name,String passwd){
+        this.username=name;
+        this.password=passwd;
+    }
+
     public String getUsername() {
         return username;
     }

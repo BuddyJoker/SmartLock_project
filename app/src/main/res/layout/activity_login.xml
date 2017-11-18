@@ -9,14 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="150dp">
-        <TextView
+
+        <ImageView
             android:layout_marginTop="50dp"
+            android:background="@drawable/team_logo"
             android:layout_gravity="center"
-            android:text="安 安"
-            android:textSize="30sp"
-            android:textColor="@color/color_textColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="100dp"
+            android:layout_height="88dp" />
         <EditText
             android:id="@+id/user_name"
             android:layout_width="fill_parent"
@@ -60,7 +59,7 @@
         <TextView
             android:id="@+id/register_link"
             android:text="注册账号 >"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginStart="36dp"
             android:layout_width="wrap_content"
             android:layout_height="30dp" />

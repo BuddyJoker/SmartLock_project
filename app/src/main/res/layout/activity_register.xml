@@ -4,6 +4,9 @@
     android:layout_height="match_parent"
     android:background="#F0F4F3">
 
+    <include
+        android:id="@+id/title_lock"
+        layout="@layout/titlebar_register"/>
 
 
     <EditText
@@ -23,6 +26,7 @@
 
     <EditText
         android:id="@+id/register_pass_word"
+        android:inputType="textPassword"
         android:layout_width="fill_parent"
         android:layout_height="55dip"
         android:background="@drawable/bg_edittext"
@@ -37,6 +41,7 @@
 
     <EditText
         android:id="@+id/mail"
+        android:inputType="textEmailAddress"
         android:layout_width="fill_parent"
         android:layout_height="55dip"
         android:background="@drawable/bg_edittext"
@@ -91,7 +96,7 @@
         android:textSize="20sp"
         android:textColor="@color/AntiqueWhite"
         android:background="@drawable/bg_button_login"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_marginStart="36dp"
         android:layout_marginEnd="36dp"
         android:layout_width="match_parent"
