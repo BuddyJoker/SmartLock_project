@@ -6,11 +6,13 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.users.smartlock_v11.R;
 import com.example.users.smartlock_v11.base.BaseFragment;
@@ -122,6 +124,31 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onConfigurationChanged(Configuration config) {
         super.onConfigurationChanged(config);
+    }
+
+    /**
+     * 点击两次退出
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK && event.getRepeatCount()==0){
+            exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode,event);
+    }
+    private long mExitTime;
+    public void exit() {
+        if ((System.currentTimeMillis()-mExitTime)>2000){
+            Toast.makeText(MainActivity.this,"又要学习去了？",Toast.LENGTH_SHORT).show();
+            mExitTime=System.currentTimeMillis();
+        }else{
+            finish();
+            System.exit(0);
+        }
     }
 
 }

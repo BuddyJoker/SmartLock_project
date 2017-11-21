@@ -38,5 +38,5 @@ dependencies {
     compile files('libs/aip-java-sdk-3.1.0.jar')
     compile 'com.github.vilyever:AndroidSocketClient:3.0.3'
     compile 'com.koushikdutta.async:androidasync:2.+'
-    compile project(':PullToRefresh_library')
+
 }

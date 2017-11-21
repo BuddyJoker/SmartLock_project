@@ -1,17 +1,22 @@
 package com.example.users.smartlock_v11.user.fragment;
 
+import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.users.smartlock_v11.R;
 import com.example.users.smartlock_v11.base.BaseFragment;
 import com.example.users.smartlock_v11.home.bean.TokenBean;
 import com.example.users.smartlock_v11.user.adapter.UserAdapter;
+import com.example.users.smartlock_v11.user.base.EndLessOnScrollListener;
 import com.example.users.smartlock_v11.user.bean.UserBean;
 import com.example.users.smartlock_v11.user.bean.UserInfoBean;
 import com.example.users.smartlock_v11.utils.AuthService;
@@ -37,11 +42,10 @@ public class UserFragment extends BaseFragment {
 
     @Bind(R.id.list_user)
     RecyclerView mRecyclerView;
-
+    @Bind(R.id.layout_swipe_refresh)
+    SwipeRefreshLayout layout_swipe_refresh;
+    LinearLayoutManager mLinearLayoutManager;
     public static final String GROUP_USER_URL="https://aip.baidubce.com/rest/2.0/face/v2/faceset/group/getusers";
-
-    private String error_token;
-    private String error_token_msg;
 
     private UserAdapter userAdapter;
     private List<UserInfoBean.ResultBean> result;
@@ -62,7 +66,33 @@ public class UserFragment extends BaseFragment {
         //getTokenFromNet(Constants.API_KEY,Constants.SECRET_KEY);
         access_token= CacheUtils.getString(mContext,"token");
         getDataFromNet();
+        initListener();
+        layout_swipe_refresh.setColorSchemeResources(android.R.color.holo_blue_light);
     }
+
+    private void initListener() {
+        layout_swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getDataFromNet();
+                userAdapter.notifyDataSetChanged();
+                layout_swipe_refresh.setRefreshing(false);
+            }
+        });
+
+//        mRecyclerView.addOnScrollListener(new EndLessOnScrollListener(mLinearLayoutManager) {
+//            @Override
+//            public void onLoadMore(int currentPage) {
+//                loadMoreData();
+//            }
+//        });
+    }
+
+    private void loadMoreData() {
+        getDataFromNet();
+        userAdapter.notifyDataSetChanged();
+    }
+
 
     public void getDataFromNet() {
         OkHttpUtils
@@ -106,54 +136,4 @@ public class UserFragment extends BaseFragment {
         result_num=userInfoBean.getResult_num();
     }
 
-
-    private void getTokenFromNet(String ak, String sk){
-        OkHttpUtils
-                .post()
-                .url(Constants.authHost)
-                .addParams("grant_type","client_credentials")
-                .addParams("client_id",Constants.API_KEY)
-                .addParams("client_secret",Constants.SECRET_KEY)
-                .build()
-                .execute(new TokenStringCallBack());
-    }
-
-    public class TokenStringCallBack extends StringCallback{
-
-        @Override
-        public void onError(Call call, Exception e, int id) {
-            Log.e("error","联网失败");
-        }
-
-        @Override
-        public void onResponse(String response, int id) {
-            if (response!=null){
-                processToken(response);
-                if (error_token!=null){
-                    Toast.makeText(mContext,error_token+":"+error_token_msg,Toast.LENGTH_LONG).show();
-                }else {
-                    Toast.makeText(mContext,access_token,Toast.LENGTH_LONG).show();
-                }
-            }
-
-        }
-
-        @Override
-        public void onAfter(int id) {
-            super.onAfter(id);
-            if (access_token!=null){
-                getDataFromNet();
-            }else{
-                Toast.makeText(mContext,"未获取到token",Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    private void processToken(String json){
-        Gson gson=new Gson();
-        TokenBean tokenBean=gson.fromJson(json,TokenBean.class);
-        access_token=tokenBean.getAccess_token();
-        error_token=tokenBean.getError();
-        error_token_msg=tokenBean.getError_description();
-    }
 }
