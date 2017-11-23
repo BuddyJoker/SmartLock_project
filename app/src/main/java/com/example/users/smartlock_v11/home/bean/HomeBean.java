@@ -5,7 +5,6 @@ package com.example.users.smartlock_v11.home.bean;
  */
 
 public class HomeBean {
-
     /**
      * 成功
      * log_id:73473737

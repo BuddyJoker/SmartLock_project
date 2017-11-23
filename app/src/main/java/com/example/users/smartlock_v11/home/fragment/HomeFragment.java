@@ -85,7 +85,8 @@ import static android.app.Activity.RESULT_OK;
  *      3.将图片路径转化成URI
  *      4.创建图片的文件流并解析成bitmap以显示在imageView中
  *
- * 问题：二次拍照获取不到数控
+ * 问题：二次拍照不能刷新imageView(解决)
+ *      调试大法好，不解释了
  */
 
 public class HomeFragment extends BaseFragment {
@@ -99,7 +100,9 @@ public class HomeFragment extends BaseFragment {
     private String result_id;
     private int error_code;
     private String error_msg;
-    private String imgStr;
+    private static String imgStr;
+    private static FileInputStream fis=null;
+    private static Bitmap bitmap=null;
     JSONObject res;
 
     @Bind(R.id.cam)
@@ -158,6 +161,9 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (!mFilePath.equals(Environment.getExternalStorageDirectory().getPath())){
+                    mFilePath=Environment.getExternalStorageDirectory().getPath();
+                }
                 mFilePath=mFilePath+"/"+System.currentTimeMillis()+".jpg";
                 Uri photoUri=Uri.fromFile(new File(mFilePath));
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri);
@@ -175,10 +181,13 @@ public class HomeFragment extends BaseFragment {
             switch (requestCode) {
                 case REQ:
                     //将文件流解析为bitmap并显示
-                    FileInputStream fis=null;
+                    //FileInputStream fis=null;
                     try {
+                        fis=null;
+                        bitmap=null;
                         fis=new FileInputStream(mFilePath);
-                        Bitmap bitmap=BitmapFactory.decodeStream(fis);
+                        bitmap=BitmapFactory.decodeStream(fis);
+                        String test=mFilePath;
                         cam.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -197,8 +206,10 @@ public class HomeFragment extends BaseFragment {
                         e.printStackTrace();
                     }
                     //显示视图
-                    cam.setVisibility(View.VISIBLE);
-                    register_info_view.setVisibility(View.VISIBLE);
+                    if (register_info_view.getVisibility()==View.GONE){
+                        cam.setVisibility(View.VISIBLE);
+                        register_info_view.setVisibility(View.VISIBLE);
+                    }
                     break;
 
             }
@@ -229,10 +240,11 @@ public class HomeFragment extends BaseFragment {
                 processData(response);
                 if (error_msg!=null){
                     Toast.makeText(mContext, "上传失败:"+error_code+";"+error_msg, Toast.LENGTH_LONG).show();
-                    cam.setVisibility(View.GONE);
-                    register_info_view.setVisibility(View.GONE);
                 }else{
                     Toast.makeText(mContext, "上传成功:"+result_id, Toast.LENGTH_SHORT).show();
+                    mFilePath=Environment.getExternalStorageDirectory().getPath();
+                    cam.setImageBitmap(null);
+                    register_info_view.setVisibility(View.GONE);
                 }
             }
 

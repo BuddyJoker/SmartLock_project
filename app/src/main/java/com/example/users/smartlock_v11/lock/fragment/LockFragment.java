@@ -58,6 +58,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import okhttp3.Call;
+import okhttp3.MediaType;
 import okhttp3.Request;
 
 /**
@@ -103,17 +104,18 @@ public class LockFragment extends BaseFragment{
 
     @Override
     public void initData() {
-        handler=new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                if (msg.what==123){
-                    Toast.makeText(mContext,msg.obj.toString()+"",Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
-        clientThread=new ClientThread(handler);
-        new Thread(clientThread).start();
+        //接受TCP链接的数据
+//        handler=new Handler(){
+//            @Override
+//            public void handleMessage(Message msg) {
+//                super.handleMessage(msg);
+//                if (msg.what==123){
+//                    Toast.makeText(mContext,msg.obj.toString()+"",Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        };
+//        clientThread=new ClientThread(handler);
+//        new Thread(clientThread).start();
 
         //未经过网络的固定数据
         processTCPData(data_json);
@@ -191,7 +193,7 @@ public class LockFragment extends BaseFragment{
         @Override
         public void onError(okhttp3.Call call, Exception e, int id) {
             //Log.e("TAG", "联网失败" + e.getMessage());
-            Toast.makeText(mContext,"联网失败",Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext,"网络连接失败",Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -203,6 +205,11 @@ public class LockFragment extends BaseFragment{
                         //json解析并抽取数据
                         processData(response);
                         //设置适配器并显示数据
+                        if (log_id==1000){
+                            Toast.makeText(mContext,"开锁成功",Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(mContext,"开锁失败",Toast.LENGTH_SHORT).show();
+                        }
                     }
                     break;
                 case 101:
@@ -216,6 +223,7 @@ public class LockFragment extends BaseFragment{
         //数据bean抽取json数据
         LockBean lockBean=gson.fromJson(json,LockBean.class);
         //返回result数据集合
+        log_id=lockBean.getLog_id();
     }
 
     private void initListener(){
@@ -223,12 +231,16 @@ public class LockFragment extends BaseFragment{
         bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    TCPNet();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Log.e("提示","链接");
+                //http链接
+                sendControlData();
+                //TCP链接
+//                try {
+//                    TCPNet();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                Log.e("提示","链接");
+
             }
         });
 
@@ -236,23 +248,17 @@ public class LockFragment extends BaseFragment{
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext,"添加设备",Toast.LENGTH_SHORT).show();
-//                SocketIOClient.connect(AsyncHttpClient.getDefaultInstance(), "http://192.168.171.179:8888", new ConnectCallback() {
-//                    @Override
-//                    public void onConnectCompleted(Exception ex, SocketIOClient client) {
-//                        if (ex!=null){
-//                            ex.printStackTrace();
-//                        }
-//
-//                        client.setStringCallback(new com.koushikdutta.async.http.socketio.StringCallback() {
-//                            @Override
-//                            public void onString(String string, Acknowledge acknowledge) {
-//
-//                            }
-//                        });
-//                    }
-//                });
             }
         });
+    }
+
+    private void sendControlData() {
+        OkHttpUtils.postString()
+                .url("")
+                .content(data_json)
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new MyStringCallback());
     }
 
 }
