@@ -18,6 +18,7 @@
             android:layout_height="88dp" />
         <EditText
             android:id="@+id/user_name"
+            android:inputType="text"
             android:layout_width="fill_parent"
             android:layout_height="55dip"
             android:background="@drawable/bg_edittext"
@@ -33,6 +34,7 @@
 
         <EditText
             android:id="@+id/pass_word"
+            android:inputType="textPassword"
             android:layout_width="fill_parent"
             android:layout_height="55dip"
             android:background="@drawable/bg_edittext"

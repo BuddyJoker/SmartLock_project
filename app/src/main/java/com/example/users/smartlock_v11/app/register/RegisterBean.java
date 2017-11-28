@@ -19,10 +19,20 @@ public class RegisterBean {
     private String email;
     private String phonenum;
     private String sex;
+    /**
+     * error_code : 0000
+     * msg : Rigester Successful
+     */
 
-    public RegisterBean(String name,String passwd){
+    private String error_code;
+    private String msg;
+
+    public RegisterBean(String name,String passwd,String email,String phonenum,String sex){
         this.username=name;
         this.password=passwd;
+        this.email=email;
+        this.phonenum=phonenum;
+        this.sex=sex;
     }
 
     public String getUsername() {
@@ -63,5 +73,21 @@ public class RegisterBean {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public String getError_code() {
+        return error_code;
+    }
+
+    public void setError_code(String error_code) {
+        this.error_code = error_code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

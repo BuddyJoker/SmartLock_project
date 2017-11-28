@@ -23,7 +23,9 @@ import com.example.users.smartlock_v11.lock.Activity.ContentActivity;
 import com.example.users.smartlock_v11.lock.adapter.LockAdapter;
 import com.example.users.smartlock_v11.lock.bean.LockBean;
 import com.example.users.smartlock_v11.lock.util.ClientThread;
+import com.example.users.smartlock_v11.utils.CacheUtils;
 import com.example.users.smartlock_v11.utils.Constants;
+import com.example.users.smartlock_v11.utils.CustomProgressDialog;
 import com.google.gson.Gson;
 import com.koushikdutta.async.http.AsyncHttpClient;
 import com.koushikdutta.async.http.socketio.Acknowledge;
@@ -79,6 +81,13 @@ public class LockFragment extends BaseFragment{
 
     private String test="test_data";
 
+    private String access_token;
+    private String Error_code;
+    private static final String hard_Id="ae20ea77-ad6b-4029-b820-acfe0954e8ac";
+    private static final String DEV_IP="192.168.1.1";
+
+    private CustomProgressDialog mProgressDialog;
+
     Handler handler;
     ClientThread clientThread;
     @Bind(R.id.list_device)
@@ -91,7 +100,7 @@ public class LockFragment extends BaseFragment{
     //网络数据
     String data_json="{\"log_id\":73473737,"+
             "\"result_num\":2,"+
-            "\"result\":[{\"ip\":0,\"port\":8866,\"mac\":123.45},{\"ip\":0,\"port\":2333,\"mac\":456.12}]}";
+            "\"result\":[{\"ip\":0,\"port\":8866,\"mac\":123.45}]}";
 
 
     @Override
@@ -118,10 +127,16 @@ public class LockFragment extends BaseFragment{
 //        new Thread(clientThread).start();
 
         //未经过网络的固定数据
-        processTCPData(data_json);
-        lockAdapter=new LockAdapter(mContext,resultBeen);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mRecyclerView.setAdapter(lockAdapter);
+        String username=CacheUtils.getString(mContext,"username");
+        if (username.equals("yuancong")){
+            processTCPData(data_json);
+            lockAdapter=new LockAdapter(mContext,resultBeen);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+            mRecyclerView.setAdapter(lockAdapter);
+        }else {
+//            processTCPData(null);
+        }
+
         initListener();
         //getDataFromNet();
     }
@@ -184,6 +199,8 @@ public class LockFragment extends BaseFragment{
 
         @Override
         public void onBefore(Request request, int id) {
+            mProgressDialog=new CustomProgressDialog(mContext,R.style.loading_dialog);
+            mProgressDialog.show();
         }
 
         @Override
@@ -193,27 +210,42 @@ public class LockFragment extends BaseFragment{
         @Override
         public void onError(okhttp3.Call call, Exception e, int id) {
             //Log.e("TAG", "联网失败" + e.getMessage());
-            Toast.makeText(mContext,"网络连接失败",Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext,"网络连接失败"+e.getMessage(),Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onResponse(String response, int id) {
-
-            switch (id) {
-                case 100:
-                    if (response != null) {
-                        //json解析并抽取数据
-                        processData(response);
-                        //设置适配器并显示数据
-                        if (log_id==1000){
-                            Toast.makeText(mContext,"开锁成功",Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(mContext,"开锁失败",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    break;
-                case 101:
-                    break;
+            mProgressDialog.dismiss();
+            if (response != null) {
+                //json解析并抽取数据
+                processData(response);
+                //设置适配器并显示数据
+                switch (Error_code){
+                    case "2000":
+                        Toast.makeText(mContext,"锁已开启",Toast.LENGTH_SHORT).show();
+                        break;
+                    case "2001":
+                        Toast.makeText(mContext,"Subserver offline",Toast.LENGTH_SHORT).show();
+                        break;
+                    case "2002":
+                        Toast.makeText(mContext,"SubserverId包含危险字符",Toast.LENGTH_SHORT).show();
+                        break;
+                    case "2003":
+                        Toast.makeText(mContext,"Token包含危险字符",Toast.LENGTH_SHORT).show();
+                        break;
+                    case "2004":
+                        Toast.makeText(mContext,"Token无效",Toast.LENGTH_SHORT).show();
+                        break;
+                    case "2005":
+                        Toast.makeText(mContext,"SubserverId不可用",Toast.LENGTH_SHORT).show();
+                        break;
+                    case "2006":
+                        Toast.makeText(mContext,"DeviceIP不可用",Toast.LENGTH_SHORT).show();
+                        break;
+                    case "2007":
+                        Toast.makeText(mContext,"Token对该子服务器无权限。也就是说你尝试用一个token操作一个不属于你的子服务器",Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
         }
     }
@@ -223,7 +255,7 @@ public class LockFragment extends BaseFragment{
         //数据bean抽取json数据
         LockBean lockBean=gson.fromJson(json,LockBean.class);
         //返回result数据集合
-        log_id=lockBean.getLog_id();
+        Error_code=lockBean.getError_code();
     }
 
     private void initListener(){
@@ -231,15 +263,21 @@ public class LockFragment extends BaseFragment{
         bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //http链接
-                sendControlData();
-                //TCP链接
+                if (CacheUtils.getString(mContext,"username").equals("yuancong")){
+                    //http链接
+                    access_token=CacheUtils.getString(mContext,"loginToken");
+                    sendControlData();
+                    //TCP链接
 //                try {
 //                    TCPNet();
 //                } catch (JSONException e) {
 //                    e.printStackTrace();
 //                }
 //                Log.e("提示","链接");
+                }else{
+                    Toast.makeText(mContext,"无控制设备",Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
@@ -254,11 +292,17 @@ public class LockFragment extends BaseFragment{
 
     private void sendControlData() {
         OkHttpUtils.postString()
-                .url("")
-                .content(data_json)
+                .url("http://www.writebug.site/api/lock")
+                .content(processSendData(access_token,hard_Id,DEV_IP))
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build()
                 .execute(new MyStringCallback());
+    }
+
+    private String processSendData(String actoken,String Id,String deviceIP){
+        Gson gson=new Gson();
+        LockBean lockBean=new LockBean(actoken,Id,deviceIP);
+        return gson.toJson(lockBean);
     }
 
 }

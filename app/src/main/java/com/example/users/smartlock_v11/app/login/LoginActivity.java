@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.users.smartlock_v11.R;
 import com.example.users.smartlock_v11.app.MainActivity;
 import com.example.users.smartlock_v11.app.register.RegisterActivity;
+import com.example.users.smartlock_v11.utils.CacheUtils;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -34,9 +35,9 @@ import okhttp3.MediaType;
 public class LoginActivity extends Activity {
 
     public Context mContext;
-    private String jsonObject;
     private String Error_code;
     private String msg;
+    private String accessToken;
 
     @Bind(R.id.user_name)
     EditText user_name;
@@ -63,7 +64,7 @@ public class LoginActivity extends Activity {
 
     private void sendDataToNet() {
         OkHttpUtils.postString()
-                .url("url")
+                .url("http://www.writebug.site/api/login")
                 .content(processSendData(user_name.getText().toString(),pass_word.getText().toString()))
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build()
@@ -80,10 +81,33 @@ public class LoginActivity extends Activity {
 //                            startActivity(intent);
 //                            finish();
                             processRecData(response);
-                            if (Error_code.equals("0000")){
-                                Toast.makeText(mContext,"登录成功",Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(mContext,"失败："+msg,Toast.LENGTH_SHORT).show();
+                            if (accessToken!=null){
+                                CacheUtils.putString(mContext, "loginToken", accessToken);
+                                CacheUtils.putString(mContext,"username",user_name.getText().toString());
+                                startActivity(new Intent(mContext, MainActivity.class));
+                                finish();
+
+                            }else {
+                                switch (Error_code) {
+                                    case "0001":
+                                        Toast.makeText(mContext, "失败：发送的JSON包格式不符合要求", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case "0002":
+                                        Toast.makeText(mContext, "失败：用户名包含危险字符", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case "0003":
+                                        Toast.makeText(mContext, "失败：密码包含危险字符", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case "0004":
+                                        Toast.makeText(mContext, "失败：用户名不存在", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case "0005":
+                                        Toast.makeText(mContext, "失败：密码错误", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    default:
+
+                                        break;
+                                }
                             }
                         }
                     }
@@ -99,7 +123,7 @@ public class LoginActivity extends Activity {
                 if (!user_name.getText().toString().equals("")&&!pass_word.getText().toString().equals("")){
                     sendDataToNet();
                 }else{
-                    Toast.makeText(mContext,"请输入用户名和密码"+msg,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext,"用户名和密码不能为空",Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -110,6 +134,7 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
                 Intent intent=new Intent(mContext, RegisterActivity.class);
                 startActivity(intent);
+
             }
         });
         //关于我们
@@ -124,13 +149,13 @@ public class LoginActivity extends Activity {
     private String processSendData(String name, String pwd){
         Gson gson=new Gson();
         LoginBean loginBean=new LoginBean(name,pwd);
-        jsonObject=gson.toJson(loginBean);
-        return jsonObject;
+        return gson.toJson(loginBean);
     }
 
     private void processRecData(String json){
         Gson gson=new Gson();
         LoginBean loginBean=gson.fromJson(json,LoginBean.class);
+        accessToken=loginBean.getAccessToken();
         Error_code=loginBean.getError_code();
         msg=loginBean.getMsg();
     }
