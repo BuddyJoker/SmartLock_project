@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.users.smartlock_v11.R;
 import com.example.users.smartlock_v11.base.BaseFragment;
 import com.example.users.smartlock_v11.lock.Activity.ContentActivity;
+import com.example.users.smartlock_v11.lock.Activity.NewDeviceActivity;
 import com.example.users.smartlock_v11.lock.adapter.LockAdapter;
 import com.example.users.smartlock_v11.lock.bean.LockBean;
 import com.example.users.smartlock_v11.lock.util.ClientThread;
@@ -285,7 +286,7 @@ public class LockFragment extends BaseFragment{
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext,"添加设备",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(mContext, NewDeviceActivity.class));
             }
         });
     }

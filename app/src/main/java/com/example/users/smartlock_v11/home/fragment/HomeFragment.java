@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -165,8 +166,12 @@ public class HomeFragment extends BaseFragment {
                     mFilePath=Environment.getExternalStorageDirectory().getPath();
                 }
                 mFilePath=mFilePath+"/"+System.currentTimeMillis()+".jpg";
-                Uri photoUri=Uri.fromFile(new File(mFilePath));
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri);
+                //Uri photoUri=Uri.fromFile(new File(mFilePath));android N 上会crash
+                //intent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri);
+                ContentValues contentValues = new ContentValues(1);
+                contentValues.put(MediaStore.Images.Media.DATA, new File(mFilePath).getAbsolutePath());
+                Uri uri = mContext.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
                 intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
                 startActivityForResult(intent,REQ);
             }
