@@ -9,6 +9,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <!-- Optional for location -->
 
@@ -40,6 +43,15 @@
 
         </activity>
         <activity android:name=".app.SplashActivity">
+
+        </activity>
+        <activity android:name=".lock.Activity.BondDevActivity">
+
+        </activity>
+        <activity android:name=".lock.Activity.BondSuActivity">
+
+        </activity>
+        <activity android:name=".lock.Activity.ConWIFIActivity">
 
         </activity>
     </application>

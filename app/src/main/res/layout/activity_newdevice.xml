@@ -9,11 +9,31 @@
         android:id="@+id/title_newdevice"
         layout="@layout/titlebar_newdevice"/>
 
+    <TextView
+        android:text="欢迎使用安家智联锁"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/color_textColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"/>
+    <TextView
+        android:text="帮助设备连上网络"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"/>
+
     <Button
         android:id="@+id/device_bind"
-        android:text="绑定设备"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:text="开始联网"
+        android:textColor="@color/White"
+        android:background="#35B5FD"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="80dp"/>
     <LinearLayout
         android:id="@+id/bind"
         android:orientation="vertical"

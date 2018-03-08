@@ -2,6 +2,7 @@ package com.example.users.smartlock_v11.lock.Activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -119,8 +120,10 @@ public class NewDeviceActivity extends AppCompatActivity {
         device_bind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                device_bind.setVisibility(View.GONE);
-                bind_view.setVisibility(View.VISIBLE);
+//                device_bind.setVisibility(View.GONE);
+//                bind_view.setVisibility(View.VISIBLE);
+                startActivity(new Intent(NewDeviceActivity.this,ConWIFIActivity.class));
+                finish();
             }
         });
     }
