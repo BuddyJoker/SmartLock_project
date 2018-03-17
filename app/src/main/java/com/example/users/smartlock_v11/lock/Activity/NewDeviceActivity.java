@@ -122,7 +122,7 @@ public class NewDeviceActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                device_bind.setVisibility(View.GONE);
 //                bind_view.setVisibility(View.VISIBLE);
-                startActivity(new Intent(NewDeviceActivity.this,ConWIFIActivity.class));
+                startActivity(new Intent(NewDeviceActivity.this,BluetoothActivity.class));
                 finish();
             }
         });

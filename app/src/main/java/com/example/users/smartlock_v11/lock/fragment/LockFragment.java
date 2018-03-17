@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -24,6 +25,8 @@ import com.example.users.smartlock_v11.R;
 import com.example.users.smartlock_v11.base.BaseFragment;
 import com.example.users.smartlock_v11.lock.Activity.ContentActivity;
 import com.example.users.smartlock_v11.lock.Activity.NewDeviceActivity;
+import com.example.users.smartlock_v11.lock.Activity.ScannerActivity;
+import com.example.users.smartlock_v11.lock.Activity.ShareActivity;
 import com.example.users.smartlock_v11.lock.adapter.LockAdapter;
 import com.example.users.smartlock_v11.lock.bean.LockBean;
 import com.example.users.smartlock_v11.lock.util.ClientThread;
@@ -85,6 +88,7 @@ public class LockFragment extends BaseFragment{
     private List<LockBean.SubserverInfoBean> subserverInfoBeans;
     private List<LockBean> setResultBeen;
     private LockAdapter lockAdapter;
+    private String token;
 
     private String test="test_data";
 
@@ -108,7 +112,7 @@ public class LockFragment extends BaseFragment{
     @Bind(R.id.iv_add_icon)
     ImageView iv;
     @Bind(R.id.more_device)
-    ImageSwitcher more_device;
+    ImageButton more_device;
     @Bind(R.id.rule_line_tv)
     TextView top_line;
 
@@ -151,38 +155,47 @@ public class LockFragment extends BaseFragment{
 //        }else {
 ////            processTCPData(null);
 //        }
-
+        token=CacheUtils.getString(mContext,"loginToken");
         getDataFromNet();
-
+        getScreenPixels();
         initListener();
-        //getDataFromNet();
+
     }
 
     private void getDataFromNet() {
-        OkHttpUtils.get()
-                .url(Constants.SUBSEVER_LIST)
-                .addHeader("Authorization","Bearer "+CacheUtils.getString(mContext,"loginToken"))
-                .build()
-                .execute(new SubserverCallBack());
-    }
+        if (!token.equals(null)){
+            OkHttpUtils.get()
+                    .url(Constants.SUBSEVER_LIST)
+                    .addHeader("Authorization","Bearer "+token)
+                    .build()
+                    .execute(new StringCallback(){
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+                            Toast.makeText(mContext,"网络连接错误"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
 
-    public class SubserverCallBack extends StringCallback{
-
-        @Override
-        public void onError(Call call, Exception e, int id) {
-            Toast.makeText(mContext,"网络连接错误"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onResponse(String response, int id) {
+                            if (!response.equals("")){
+                                processTCPData(response);
+                                lockAdapter=new LockAdapter(mContext,subserverInfoBeans);
+                                mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+                                mRecyclerView.setAdapter(lockAdapter);
+                            }else{
+                                Toast.makeText(mContext,"无返回信息/"+response,Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }else{
+            Toast.makeText(mContext,"未获取token",Toast.LENGTH_SHORT).show();
         }
 
-        @Override
-        public void onResponse(String response, int id) {
-            if (response!=null){
-                processTCPData(response);
-                lockAdapter=new LockAdapter(mContext,subserverInfoBeans);
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-                mRecyclerView.setAdapter(lockAdapter);
-            }
-        }
     }
+
+//    public class SubserverCallBack extends StringCallback{
+//
+//
+//    }
 
     private void processTCPData(String json){
         Gson gson=new Gson();
@@ -373,6 +386,16 @@ public class LockFragment extends BaseFragment{
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
             Toast.makeText(mContext,items.get(position),Toast.LENGTH_SHORT).show();
+            switch (items.get(position)){
+                case "扫一扫":
+                    //进入扫码界面
+                    startActivity(new Intent(mContext, ScannerActivity.class));
+                    break;
+                case "分享码":
+                    //进入分享码界面，显示图片
+                    startActivity(new Intent(mContext, ShareActivity.class));
+                    break;
+            }
             middlePopup.dismiss();
         }
     };

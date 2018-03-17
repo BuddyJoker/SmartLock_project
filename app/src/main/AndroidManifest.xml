@@ -33,7 +33,11 @@
 
         </activity>
         <activity android:name=".app.login.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".app.register.RegisterActivity">
 
@@ -51,11 +55,13 @@
 
         </activity>
         <activity android:name=".lock.Activity.BluetoothActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+        <activity android:name=".lock.Activity.ShareActivity">
+
+        </activity>
+        <activity android:name=".lock.Activity.ScannerActivity">
+
         </activity>
     </application>
     <uses-permission android:name="android.permission.BLUETOOTH" />

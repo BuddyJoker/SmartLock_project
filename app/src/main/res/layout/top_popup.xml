@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="#ffffff"
+
         android:orientation="vertical" >
 
         <ListView
@@ -16,7 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@color/content_line"
-            android:dividerHeight="0.5dp" >
+            android:dividerHeight="0.5dp"
+            android:background="@color/color_Blue">
         </ListView>
 
         <TextView

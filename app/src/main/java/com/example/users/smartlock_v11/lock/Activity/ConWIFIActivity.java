@@ -36,6 +36,7 @@ public class ConWIFIActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_con_wifi);
         ButterKnife.bind(this);
+        wifi_name.setText(getConnectWIFI());
         initListener();
     }
 
@@ -43,10 +44,10 @@ public class ConWIFIActivity extends Activity {
         send_wifi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                wifi_name.setText(getConnectWIFI());
+                wifi_name.getText();
                 wifi_pass.getText();
                 String wifi_info=wifi_name+"@"+wifi_pass;
-                sendCommand(wifi_info);
+                //sendCommand(wifi_info);
 
                 startActivity(new Intent(ConWIFIActivity.this,BondDevActivity.class));
                 //finish();

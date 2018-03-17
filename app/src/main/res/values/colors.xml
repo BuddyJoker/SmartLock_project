@@ -13,4 +13,5 @@
     <color name="color_background_login">#2ECFDC</color>
     <color name="content_line">#C0C0C0</color>
     <color name="reserve_line">#C0C0C0</color>
+    <color name="colorPrimaryDarkTrans">#CCf57257</color>
 </resources>
