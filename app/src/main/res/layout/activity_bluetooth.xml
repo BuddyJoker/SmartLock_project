@@ -12,14 +12,14 @@
         android:layout_marginEnd="15dp">
 
         <TextView
-            android:id="@+id/bond_con"
+            android:id="@+id/bluetooth_cancel"
             android:text="取消"
             android:textSize="15sp"
             android:textColor="#35B5FD"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
-            android:text="2/3"
+            android:text="1/3"
             android:textSize="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,34 +27,28 @@
 
     </RelativeLayout>
     <TextView
-        android:text="请输入WiFi密码"
+        android:text="请选择蓝牙连接"
         android:textSize="25sp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/wifi_name"
-        android:hint="wifi_name"
+
+
+    <Spinner
+        android:id="@+id/list_down"
+        android:hint="Bluetooth_first"
         android:layout_marginTop="40dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textSize="20dp"/>
+        android:layout_height="40dp" />
 
-    <EditText
-        android:id="@+id/wifi_pass"
-        android:hint="请输入Wi-Fi密码"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/send_wifi"
-        android:text="下一步"
+        android:id="@+id/send_blue"
+        android:text="连接蓝牙目标"
         android:textColor="@color/White"
         android:background="#35B5FD"
         android:layout_width="match_parent"

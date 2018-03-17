@@ -17,6 +17,7 @@ import com.example.users.smartlock_v11.R;
 import com.example.users.smartlock_v11.app.MainActivity;
 import com.example.users.smartlock_v11.app.register.RegisterActivity;
 import com.example.users.smartlock_v11.utils.CacheUtils;
+import com.example.users.smartlock_v11.utils.Constants;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -64,7 +65,7 @@ public class LoginActivity extends Activity {
 
     private void sendDataToNet() {
         OkHttpUtils.postString()
-                .url("http://www.writebug.site/api/login")
+                .url(Constants.LOGIN)
                 .content(processSendData(user_name.getText().toString(),pass_word.getText().toString()))
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build()

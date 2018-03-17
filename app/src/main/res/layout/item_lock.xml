@@ -23,39 +23,59 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="5dp"
             android:layout_marginStart="20dp">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:layout_weight="1">
                 <TextView
-                    android:text="MAC地址:"
+                    android:text="ID:"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="5dp"/>
                 <TextView
                     android:id="@+id/item_lock_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:textColor="@color/color_textColor"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:layout_weight="1">
                 <TextView
-                    android:text="端口:"
+                    android:text="IP:"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="5dp"/>
 
                 <TextView
                     android:id="@+id/item_lock_port"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/color_textColor"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+                <TextView
+                    android:text="名称:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"/>
+
+                <TextView
+                    android:id="@+id/item_lock_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:textColor="@color/color_textColor"/>
             </LinearLayout>
 

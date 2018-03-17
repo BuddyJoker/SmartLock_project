@@ -32,13 +32,12 @@ public class BondDevActivity extends Activity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(BondDevActivity.this,BondSuActivity.class));
-                finish();
             }
         });
         bond_ret.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(BondDevActivity.this,ConWIFIActivity.class));
+                //startActivity(new Intent(BondDevActivity.this,ConWIFIActivity.class));
                 finish();
             }
         });

@@ -7,9 +7,11 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.users.smartlock_v11.R;
+import com.example.users.smartlock_v11.utils.BluetoothService;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,6 +26,10 @@ public class ConWIFIActivity extends Activity {
     TextView bond_con;
     @Bind(R.id.send_wifi)
     Button send_wifi;
+    @Bind(R.id.wifi_name)
+    TextView wifi_name;
+    @Bind(R.id.wifi_pass)
+    EditText wifi_pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,22 +43,32 @@ public class ConWIFIActivity extends Activity {
         send_wifi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                wifi_name.setText(getConnectWIFI());
+                wifi_pass.getText();
+                String wifi_info=wifi_name+"@"+wifi_pass;
+                sendCommand(wifi_info);
+
                 startActivity(new Intent(ConWIFIActivity.this,BondDevActivity.class));
-                finish();
+                //finish();
             }
         });
         bond_con.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ConWIFIActivity.this,NewDeviceActivity.class));
+                //startActivity(new Intent(ConWIFIActivity.this,NewDeviceActivity.class));
                 finish();
             }
         });
     }
 
     private String getConnectWIFI(){
-        WifiManager wifiManager=(WifiManager)getSystemService(WIFI_SERVICE);
+        WifiManager wifiManager=(WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
         WifiInfo wifiInfo=wifiManager.getConnectionInfo();
         return wifiInfo.getSSID();
+    }
+
+    private void sendCommand(String command) {
+        BluetoothService bluetooth = BluetoothService.getInstance();
+        boolean sent =  bluetooth.send(command);
     }
 }

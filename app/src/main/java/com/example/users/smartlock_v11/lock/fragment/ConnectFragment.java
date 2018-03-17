@@ -49,13 +49,13 @@ public class ConnectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_connect, container, false);
-        mScanButton = (Button) rootView.findViewById(R.id.btnScan);
+        mScanButton = (Button) rootView.findViewById(R.id.btnScan);//
         mDeviceListAdapter = new ArrayAdapter<String>(getContext(), R.layout.list_device);
-        mDeviceList = (ListView) rootView.findViewById(R.id.lsvDevices);
+        mDeviceList = (ListView) rootView.findViewById(R.id.lsvDevices);//
         mDeviceList.setAdapter(mDeviceListAdapter);
-        mConnectButton = (Button) rootView.findViewById(R.id.connect_button);
+        mConnectButton = (Button) rootView.findViewById(R.id.connect_button);//
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        mReconnectButton = (Button) rootView.findViewById(R.id.reconnectbutton);
+        mReconnectButton = (Button) rootView.findViewById(R.id.reconnectbutton);//
 
         //扫描设备
         mScanButton.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +71,7 @@ public class ConnectFragment extends Fragment {
                 mBluetoothAdapter.setName("test");
 
 
-
+                //
                 if (mPairedDevices.size() > 0) {
                     // There are paired devices. Get the name and address of each paired device.
                     for (BluetoothDevice device : mPairedDevices) {

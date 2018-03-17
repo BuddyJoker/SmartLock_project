@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.users.smartlock_v11.R;
 import com.example.users.smartlock_v11.app.MainActivity;
 import com.example.users.smartlock_v11.app.login.LoginActivity;
+import com.example.users.smartlock_v11.utils.Constants;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -116,7 +117,7 @@ public class RegisterActivity extends Activity {
 
     private void sendDataToNet() {
         OkHttpUtils.postString()
-                .url("http://www.writebug.site/api/register")
+                .url(Constants.REGISTER)
                 .content(processSendData(username,password,email,phoneNum,sex))
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build()

@@ -8,6 +8,7 @@ import java.util.List;
 
 public class LockBean {
 
+
     /**
      * {"log_id" : 73473737
      * "result_num" : 2
@@ -33,6 +34,13 @@ public class LockBean {
 
     private String error_code;
     private String msg;
+    /**
+     * SubserverNum : 2
+     * SubserverInfo : [{"SubserverID":"000000","SubserverIP":"192.168.1.10 ","SubserverNickName":"树莓派0"},{"SubserverID":"000001","SubserverIP":"192.168.1.11 ","SubserverNickName":"树莓派1"}]
+     */
+
+    private int SubserverNum;
+    private List<SubserverInfoBean> SubserverInfo;
 
     public LockBean(String actoken, String id, String deviceIP) {
         this.actoken=actoken;
@@ -104,6 +112,22 @@ public class LockBean {
         this.msg = msg;
     }
 
+    public int getSubserverNum() {
+        return SubserverNum;
+    }
+
+    public void setSubserverNum(int SubserverNum) {
+        this.SubserverNum = SubserverNum;
+    }
+
+    public List<SubserverInfoBean> getSubserverInfo() {
+        return SubserverInfo;
+    }
+
+    public void setSubserverInfo(List<SubserverInfoBean> SubserverInfo) {
+        this.SubserverInfo = SubserverInfo;
+    }
+
     public static class ResultBean {
         /**
          * ip : 0
@@ -137,6 +161,42 @@ public class LockBean {
 
         public void setMac(double mac) {
             this.mac = mac;
+        }
+    }
+
+    public static class SubserverInfoBean {
+        /**
+         * SubserverID : 000000
+         * SubserverIP : 192.168.1.10
+         * SubserverNickName : 树莓派0
+         */
+
+        private String SubserverID;
+        private String SubserverIP;
+        private String SubserverNickName;
+
+        public String getSubserverID() {
+            return SubserverID;
+        }
+
+        public void setSubserverID(String SubserverID) {
+            this.SubserverID = SubserverID;
+        }
+
+        public String getSubserverIP() {
+            return SubserverIP;
+        }
+
+        public void setSubserverIP(String SubserverIP) {
+            this.SubserverIP = SubserverIP;
+        }
+
+        public String getSubserverNickName() {
+            return SubserverNickName;
+        }
+
+        public void setSubserverNickName(String SubserverNickName) {
+            this.SubserverNickName = SubserverNickName;
         }
     }
 }

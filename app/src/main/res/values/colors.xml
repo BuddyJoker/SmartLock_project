@@ -11,4 +11,6 @@
     <color name="color_textColor">#292927</color>
     <color name="color_devColor">#4A4945</color>
     <color name="color_background_login">#2ECFDC</color>
+    <color name="content_line">#C0C0C0</color>
+    <color name="reserve_line">#C0C0C0</color>
 </resources>

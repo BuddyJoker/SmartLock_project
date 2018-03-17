@@ -25,12 +25,13 @@ import butterknife.ButterKnife;
 public class LockAdapter extends RecyclerView.Adapter<LockAdapter.ViewHolder> {
 
     private Context context;
-    private List<LockBean.ResultBean> result;
+    //private List<LockBean.ResultBean> result;
+    private List<LockBean.SubserverInfoBean> subserverInfoBeans;
     private LockBean results;
 
-    public LockAdapter (Context context,List<LockBean.ResultBean> result){
-        this.context=context;
-        this.result=result;
+    public LockAdapter (Context contexts,List<LockBean.SubserverInfoBean> subserverInfoBeans){
+        this.context=contexts;
+        this.subserverInfoBeans=subserverInfoBeans;
     }
 
 
@@ -43,14 +44,16 @@ public class LockAdapter extends RecyclerView.Adapter<LockAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(LockAdapter.ViewHolder holder, int position) {
-        LockBean.ResultBean resultBean=result.get(position);
-        holder.lock_id.setText(String.valueOf(resultBean.getMac()));
-        holder.item_lock_port.setText(String.valueOf(resultBean.getPort()));
+        //LockBean.ResultBean resultBean=result.get(position);
+        LockBean.SubserverInfoBean subserverInfoBean=subserverInfoBeans.get(position);
+        holder.lock_id.setText(subserverInfoBean.getSubserverID());
+        holder.item_lock_port.setText(subserverInfoBean.getSubserverIP());
+        holder.item_lock_name.setText(subserverInfoBean.getSubserverNickName());
     }
 
     @Override
     public int getItemCount() {
-        return result.size();
+        return subserverInfoBeans.size();
     }
 
 
@@ -59,6 +62,8 @@ public class LockAdapter extends RecyclerView.Adapter<LockAdapter.ViewHolder> {
         TextView lock_id;
         @Bind(R.id.item_lock_port)
         TextView item_lock_port;
+        @Bind(R.id.item_lock_name)
+        TextView item_lock_name;
         public ViewHolder(View view){
             super(view);
             ButterKnife.bind(this,view);

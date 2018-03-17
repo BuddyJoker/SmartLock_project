@@ -14,11 +14,23 @@ public class Constants {
     public static final String BASE_URL_JSON = BASE + "/..../json/";
 
     /**
-     * 获取token信息
+     * 获取人脸库token信息
      */
     public static final String API_KEY = "Z2E7xx944efVaRncBaLnGrip";
     public static final String SECRET_KEY = "0Xp8fqsg4LEmD793DjwLF0ETGxQePqUs";
     public static final String authHost="https://aip.baidubce.com/oauth/2.0/token?";
+
+
+    /**
+     *系统API
+     */
+    public static final String SUBSEVER_LIST="http://www.writebug.site/PrivateSmartHome/api/V1/GetSubserverList/username";
+    public static final String LOGIN="http://www.writebug.site/PrivateSmartHome/api/V1/SignIn";
+    public static final String LOGOUT="http://www.writebug.site/PrivateSmartHome/api/V1/SignOut";
+    public static final String UPDATE_INFO="http://www.writebug.site/PrivateSmartHome/api/V1/UpdateUinfo";
+    public static final String REGISTER="http://www.writebug.site/PrivateSmartHome/api/V1/SignUp";
+    public static final String USER_INFO="http://www.writebug.site/PrivateSmartHome/api/V1/GetUinfo/username";
+
 
 
     /**
