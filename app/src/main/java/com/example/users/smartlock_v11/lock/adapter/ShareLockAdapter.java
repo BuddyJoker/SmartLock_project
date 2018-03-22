@@ -5,15 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.users.smartlock_v11.R;
 import com.example.users.smartlock_v11.lock.bean.LockBean;
-import com.example.users.smartlock_v11.lock.bean.LockListBean;
-import com.example.users.smartlock_v11.user.adapter.UserAdapter;
+import com.example.users.smartlock_v11.lock.bean.ShareListBean;
 
-import java.nio.DoubleBuffer;
 import java.util.List;
 
 import butterknife.Bind;
@@ -23,17 +20,15 @@ import butterknife.ButterKnife;
  * Created by BigBoss on 2017/8/19.
  */
 
-public class LockAdapter extends RecyclerView.Adapter<LockAdapter.ViewHolder> {
+public class ShareLockAdapter extends RecyclerView.Adapter<ShareLockAdapter.ViewHolder> {
 
     private Context context;
-    //private List<LockBean.ResultBean> result;
-    private List<LockBean.SubserverInfoBean> subserverInfoBeans;
-    private List<LockListBean.DeviceInfoBean> deviceInfoBeans;
+    private List<ShareListBean.DeviceInfoBean> shareListBeans;
     private LockBean results;
 
-    public LockAdapter (Context contexts,List<LockListBean.DeviceInfoBean> deviceInfoBeans){
+    public ShareLockAdapter(Context contexts, List<ShareListBean.DeviceInfoBean> shareListBeans){
         this.context=contexts;
-        this.deviceInfoBeans=deviceInfoBeans;
+        this.shareListBeans=shareListBeans;
     }
 
 
@@ -45,18 +40,18 @@ public class LockAdapter extends RecyclerView.Adapter<LockAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(LockAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ShareLockAdapter.ViewHolder holder, int position) {
         //LockBean.ResultBean resultBean=result.get(position);
         //LockBean.SubserverInfoBean subserverInfoBean=subserverInfoBeans.get(position);
-        LockListBean.DeviceInfoBean deviceInfoBean=deviceInfoBeans.get(position);
-        holder.lock_id.setText(deviceInfoBean.getDeviceID());
-        holder.item_lock_port.setText(deviceInfoBean.getDeviceIP());
-        holder.item_lock_name.setText(deviceInfoBean.getDeviceNickname());
+        ShareListBean.DeviceInfoBean shareListBean=shareListBeans.get(position);
+        holder.lock_id.setText(shareListBean.getDeviceID());
+        holder.item_lock_port.setText(shareListBean.getDeviceIP());
+        holder.item_lock_name.setText(shareListBean.getDeviceNickname());
     }
 
     @Override
     public int getItemCount() {
-        return deviceInfoBeans.size();
+        return shareListBeans.size();
     }
 
 

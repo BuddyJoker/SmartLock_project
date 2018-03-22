@@ -173,6 +173,6 @@ public class RegisterActivity extends Activity {
     private void processRecData(String json){
         Gson gson=new Gson();
         RegisterBean registerBean=gson.fromJson(json,RegisterBean.class);
-        Error_code=registerBean.getError_code();
+        Error_code=registerBean.getReturnCode();
     }
 }

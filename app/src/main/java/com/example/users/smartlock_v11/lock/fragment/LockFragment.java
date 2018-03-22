@@ -1,11 +1,13 @@
 package com.example.users.smartlock_v11.lock.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -27,8 +29,11 @@ import com.example.users.smartlock_v11.lock.Activity.ContentActivity;
 import com.example.users.smartlock_v11.lock.Activity.NewDeviceActivity;
 import com.example.users.smartlock_v11.lock.Activity.ScannerActivity;
 import com.example.users.smartlock_v11.lock.Activity.ShareActivity;
+import com.example.users.smartlock_v11.lock.Activity.ShareDeviceActivity;
 import com.example.users.smartlock_v11.lock.adapter.LockAdapter;
+import com.example.users.smartlock_v11.lock.bean.ControlBean;
 import com.example.users.smartlock_v11.lock.bean.LockBean;
+import com.example.users.smartlock_v11.lock.bean.LockListBean;
 import com.example.users.smartlock_v11.lock.util.ClientThread;
 import com.example.users.smartlock_v11.lock.util.TopMiddlePopup;
 import com.example.users.smartlock_v11.utils.CacheUtils;
@@ -86,6 +91,7 @@ public class LockFragment extends BaseFragment{
     private String log_id;
     private List<LockBean.ResultBean> resultBeen;
     private List<LockBean.SubserverInfoBean> subserverInfoBeans;
+    private List<LockListBean.DeviceInfoBean> deviceInfoBeans;
     private List<LockBean> setResultBeen;
     private LockAdapter lockAdapter;
     private String token;
@@ -95,7 +101,9 @@ public class LockFragment extends BaseFragment{
     private String access_token;
     private String Error_code;
     private static final String hard_Id="ae20ea77-ad6b-4029-b820-acfe0954e8ac";
-    private static final String DEV_IP="192.168.1.1";
+    private static final String DEV_IP="192.168.1.100";
+    private static final String mode="false";
+    private static final String code="true";
 
     private CustomProgressDialog mProgressDialog;
 
@@ -115,11 +123,14 @@ public class LockFragment extends BaseFragment{
     ImageButton more_device;
     @Bind(R.id.rule_line_tv)
     TextView top_line;
+    @Bind(R.id.share_btn)
+    ImageView share_btn;
 
     //模拟网络数据
     String data_json="{\"log_id\":73473737,"+
             "\"result_num\":2,"+
             "\"result\":[{\"ip\":0,\"port\":8866,\"mac\":123.45}]}";
+
 
 
     @Override
@@ -155,17 +166,20 @@ public class LockFragment extends BaseFragment{
 //        }else {
 ////            processTCPData(null);
 //        }
-        token=CacheUtils.getString(mContext,"loginToken");
-        getDataFromNet();
-        getScreenPixels();
-        initListener();
+        token=CacheUtils.getString(mContext,"loginToken");//获取登录token
+        getDataFromNet();//初始化设备列表
+        getScreenPixels();//获取屏幕高度
+        initListener();//初始化监听
 
     }
 
+    /**
+     * 初始化设备列表
+     */
     private void getDataFromNet() {
         if (!token.equals(null)){
             OkHttpUtils.get()
-                    .url(Constants.SUBSEVER_LIST)
+                    .url(Constants.GET_DEVICE)
                     .addHeader("Authorization","Bearer "+token)
                     .build()
                     .execute(new StringCallback(){
@@ -178,7 +192,7 @@ public class LockFragment extends BaseFragment{
                         public void onResponse(String response, int id) {
                             if (!response.equals("")){
                                 processTCPData(response);
-                                lockAdapter=new LockAdapter(mContext,subserverInfoBeans);
+                                lockAdapter=new LockAdapter(mContext,deviceInfoBeans);
                                 mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
                                 mRecyclerView.setAdapter(lockAdapter);
                             }else{
@@ -197,12 +211,15 @@ public class LockFragment extends BaseFragment{
 //
 //    }
 
+    /**
+     * 提取列表信息
+     * @param json
+     */
     private void processTCPData(String json){
         Gson gson=new Gson();
-        LockBean lockBean=gson.fromJson(json,LockBean.class);
-        subserverInfoBeans=lockBean.getSubserverInfo();
-        result_num=lockBean.getSubserverNum();
-        log_id=lockBean.getSubserverId();
+        LockListBean lockListBean=gson.fromJson(json,LockListBean.class);
+        deviceInfoBeans=lockListBean.getDeviceInfo();
+        result_num=lockListBean.getDevicenum();
     }
 
     public void TCPNet() throws JSONException{
@@ -251,6 +268,9 @@ public class LockFragment extends BaseFragment{
 
     }
 
+    /**
+     * 开锁操作过程
+     */
     public class MyStringCallback extends StringCallback {
 
         @Override
@@ -273,36 +293,51 @@ public class LockFragment extends BaseFragment{
         @Override
         public void onResponse(String response, int id) {
             mProgressDialog.dismiss();
-            if (response != null) {
+            if (response.equals("")) {
                 //json解析并抽取数据
-                processData(response);
+                //processData(response);
+                //Toast.makeText(mContext, "已开起",Toast.LENGTH_SHORT).show();
+                AlertDialog dialog1 = new AlertDialog.Builder(mContext)
+                        .setTitle("提示")
+                        .setMessage("开锁成功！")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .create();
+                dialog1.show();
                 //设置适配器并显示数据
-                switch (Error_code){
-                    case "2000":
-                        Toast.makeText(mContext,"锁已开启",Toast.LENGTH_SHORT).show();
-                        break;
-                    case "2001":
-                        Toast.makeText(mContext,"Subserver offline",Toast.LENGTH_SHORT).show();
-                        break;
-                    case "2002":
-                        Toast.makeText(mContext,"SubserverId包含危险字符",Toast.LENGTH_SHORT).show();
-                        break;
-                    case "2003":
-                        Toast.makeText(mContext,"Token包含危险字符",Toast.LENGTH_SHORT).show();
-                        break;
-                    case "2004":
-                        Toast.makeText(mContext,"Token无效",Toast.LENGTH_SHORT).show();
-                        break;
-                    case "2005":
-                        Toast.makeText(mContext,"SubserverId不可用",Toast.LENGTH_SHORT).show();
-                        break;
-                    case "2006":
-                        Toast.makeText(mContext,"DeviceIP不可用",Toast.LENGTH_SHORT).show();
-                        break;
-                    case "2007":
-                        Toast.makeText(mContext,"Token对该子服务器无权限。也就是说你尝试用一个token操作一个不属于你的子服务器",Toast.LENGTH_SHORT).show();
-                        break;
-                }
+//                switch (Error_code){
+//                    case "2000":
+//                        Toast.makeText(mContext,"锁已开启",Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case "2001":
+//                        Toast.makeText(mContext,"Subserver offline",Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case "2002":
+//                        Toast.makeText(mContext,"SubserverId包含危险字符",Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case "2003":
+//                        Toast.makeText(mContext,"Token包含危险字符",Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case "2004":
+//                        Toast.makeText(mContext,"Token无效",Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case "2005":
+//                        Toast.makeText(mContext,"SubserverId不可用",Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case "2006":
+//                        Toast.makeText(mContext,"DeviceIP不可用",Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case "2007":
+//                        Toast.makeText(mContext,"Token对该子服务器无权限。也就是说你尝试用一个token操作一个不属于你的子服务器",Toast.LENGTH_SHORT).show();
+//                        break;
+//                    default:
+//                        Toast.makeText(mContext,"未知错误",Toast.LENGTH_SHORT).show();
+//                        break;
+//                }
             }
         }
     }
@@ -316,11 +351,11 @@ public class LockFragment extends BaseFragment{
     }
 
     private void initListener(){
-
+        //开关
         bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CacheUtils.getString(mContext,"username").equals("yuancong")){
+                if (!CacheUtils.getString(mContext,"username").equals("")){
                     //http链接
                     access_token=CacheUtils.getString(mContext,"loginToken");
                     sendControlData();
@@ -332,7 +367,7 @@ public class LockFragment extends BaseFragment{
 //                }
 //                Log.e("提示","链接");
                 }else{
-                    Toast.makeText(mContext,"无控制设备",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext,"未登录",Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -344,13 +379,24 @@ public class LockFragment extends BaseFragment{
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(mContext, NewDeviceActivity.class));
+                //startActivityForResult();
             }
         });
+
+        //分享操作
         more_device.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setPopup(2);
                 middlePopup.show(top_line);
+            }
+        });
+
+        //分享设备列表
+        share_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(mContext, ShareDeviceActivity.class));
             }
         });
     }
@@ -389,7 +435,8 @@ public class LockFragment extends BaseFragment{
             switch (items.get(position)){
                 case "扫一扫":
                     //进入扫码界面
-                    startActivity(new Intent(mContext, ScannerActivity.class));
+//                    startActivity(new Intent(mContext, ScannerActivity.class));
+                    startActivityForResult(new Intent(mContext, ScannerActivity.class),10);
                     break;
                 case "分享码":
                     //进入分享码界面，显示图片
@@ -399,6 +446,17 @@ public class LockFragment extends BaseFragment{
             middlePopup.dismiss();
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==10&&resultCode==-1){
+            String str=data.getStringExtra("request_url");
+            Toast.makeText(mContext,str,Toast.LENGTH_SHORT).show();
+
+            CacheUtils.putString(mContext,"share_code",str);
+        }
+    }
 
     /**
      * 获取屏幕的宽和高
@@ -410,18 +468,22 @@ public class LockFragment extends BaseFragment{
         screenH = metrics.heightPixels;
     }
 
+    /**
+     * 开锁操作
+     */
     private void sendControlData() {
         OkHttpUtils.postString()
-                .url("http://www.writebug.site/api/lock")
-                .content(processSendData(access_token,hard_Id,DEV_IP))
+                .url(Constants.OPEN_LOCK)
+                .addHeader("Authorization","Bearer "+token)
+                .content(processSendData(mode,code,hard_Id,DEV_IP))
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build()
                 .execute(new MyStringCallback());
     }
 
-    private String processSendData(String actoken,String Id,String deviceIP){
+    private String processSendData(String mode,String code, String id, String deviceIP){
         Gson gson=new Gson();
-        LockBean lockBean=new LockBean(actoken,Id,deviceIP);
-        return gson.toJson(lockBean);
+        ControlBean controlBean=new ControlBean(mode,code,id,deviceIP);
+        return gson.toJson(controlBean);
     }
 }

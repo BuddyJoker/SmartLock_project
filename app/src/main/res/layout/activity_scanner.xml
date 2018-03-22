@@ -5,6 +5,7 @@
 
     <cn.bingoogolapple.qrcode.zxing.ZXingView
         android:id="@+id/zxingview"
+        android:layout_marginTop="25dp"
         style="@style/MatchMatch"
         app:qrcv_animTime="1000"
         app:qrcv_barCodeTipText="将条码放入框内，即可自动扫描"
@@ -35,7 +36,7 @@
         app:qrcv_toolbarHeight="56dp"
         app:qrcv_topOffset="20dp"/>
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/titlebar_scanner"/>
 
-    <include layout="@layout/view_control"/>
+    <!--<include layout="@layout/view_control"/>-->
 </RelativeLayout>

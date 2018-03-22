@@ -26,6 +26,11 @@ public class RegisterBean {
 
     private String error_code;
     private String msg;
+    /**
+     * ReturnCode : 0008
+     */
+
+    private String ReturnCode;
 
     public RegisterBean(String name,String passwd,String email,String phonenum,String sex){
         this.username=name;
@@ -89,5 +94,13 @@ public class RegisterBean {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public String getReturnCode() {
+        return ReturnCode;
+    }
+
+    public void setReturnCode(String ReturnCode) {
+        this.ReturnCode = ReturnCode;
     }
 }

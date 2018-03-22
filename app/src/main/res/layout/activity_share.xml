@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/titlebar_myshare"/>
+
     <TextView
         android:text="分享码"
         android:layout_width="wrap_content"
@@ -13,10 +15,10 @@
 
     <ImageView
         android:id="@+id/QR_code"
-        android:background="@color/color_Blue"
+        android:background="@color/GhostWhite"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="40dp" />
 
 </LinearLayout>

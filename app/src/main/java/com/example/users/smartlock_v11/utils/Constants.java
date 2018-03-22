@@ -25,12 +25,20 @@ public class Constants {
      * 系统API
      */
     public static final String SUBSEVER_LIST="http://www.writebug.site/PrivateSmartHome/api/V1/GetSubserverList/username";
+    public static final String SUBSEVER_BIND="http://www.writebug.site/PrivateSmartHome/api/V1/SubServerBind";
+    public static final String SUBSEVER_UPDATE="http://www.writebug.site/PrivateSmartHome/api/V1/UpdateSubserverInfo";
+    public static final String UPDATE_DEVICE="http://www.writebug.site/PrivateSmartHome/api/V1/UpdateDeviceInfo";
+    public static final String GET_DEVICE="http://www.writebug.site/PrivateSmartHome/api/V1/GetDevicesList/Username";
     public static final String LOGIN="http://www.writebug.site/PrivateSmartHome/api/V1/SignIn";
     public static final String LOGOUT="http://www.writebug.site/PrivateSmartHome/api/V1/SignOut";
-    public static final String UPDATE_INFO="http://www.writebug.site/PrivateSmartHome/api/V1/UpdateUinfo";
     public static final String REGISTER="http://www.writebug.site/PrivateSmartHome/api/V1/SignUp";
+    public static final String UPDATE_INFO="http://www.writebug.site/PrivateSmartHome/api/V1/UpdateUinfo";
     public static final String USER_INFO="http://www.writebug.site/PrivateSmartHome/api/V1/GetUinfo/username";
-    public static final String QR_CODE="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=fa9140accd95d143ce7bec711299e967/2934349b033b5bb571dc8c5133d3d539b600bc12.jpg";
+
+    public static final String OPEN_LOCK="http://www.writebug.site/PrivateSmartHome/api/V1/OpenLock";
+    public static final String QR_CODE="http://www.writebug.site/PrivateSmartHome/api/V1/GetShareCode/";
+    public static final String GET_SHAREDEVICE="http://www.writebug.site/PrivateSmartHome/api/V1/GetShareDeviceList";
+    public static final String SHARE="http://www.writebug.site/PrivateSmartHome/api/V1/Share";
 
 
 

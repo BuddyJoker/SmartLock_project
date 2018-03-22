@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" 
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
-    <include
-        android:id="@+id/title_users"
-        layout="@layout/titlebar_users"/>
 
+    <include layout="@layout/titlebar_share"/>
+
+    <!--分享设备列表-->
     <LinearLayout
+        android:id="@+id/list_dev_share"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="1">
+
+        <!--bar-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -21,7 +22,8 @@
             android:orientation="vertical"
             android:background="@color/color_light_silver">
             <TextView
-                android:text="小伙伴列表"
+                android:id="@+id/empty_list"
+                android:text="分享设备列表"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -30,21 +32,10 @@
 
         </LinearLayout>
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/layout_swipe_refresh"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/share_list_device"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/list_user"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="vertical"/>
-        </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
     </LinearLayout>
-    <!--bar-->
-
-
-
-
-
 </LinearLayout>

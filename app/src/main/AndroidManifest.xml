@@ -63,6 +63,9 @@
         <activity android:name=".lock.Activity.ScannerActivity">
 
         </activity>
+        <activity android:name=".lock.Activity.ShareDeviceActivity">
+
+        </activity>
     </application>
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
